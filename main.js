@@ -3,15 +3,13 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
 import { animateMoon, moon } from './src/moon';
-import asteroid from './src/asteroid';
-
+import { asteroid, animateAsteroid } from './src/asteroid';
 
 const w = window.innerWidth;
 const h = window.innerHeight;
 
 // Scene
 export const scene = new Scene();
-
 
 // Renderer
 const renderer = new WebGLRenderer({ antialias: true });
@@ -66,75 +64,54 @@ function createParticles() {
     particles = new THREE.Points(geometry, material);
     scene.add(particles);
 }
+
 controls.minDistance = 10;
 controls.maxDistance = 60;
-
-renderer.render(scene, camera);
 
 // Add to scene
 scene.add(planet);
 scene.add(moon);
 scene.add(asteroid);
 
+// Directional light
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(5, 5, 5).normalize();
 scene.add(light);
 
-// Resize (zoom in/out) event
+// Resize event
 window.addEventListener("resize", () => {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  renderer.setSize(w, h);
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
 });
 
 // Animation
 const animate = () => {
-  requestAnimationFrame(animate);
-  animateMoon();
+    requestAnimationFrame(animate);
+    animateMoon();
+    animateAsteroid();
 
-  // Atualiza os controles de órbita
-  controls.update();
+    // Atualiza os controles de órbita
+    controls.update();
 
-  // Renderiza a cena
-  renderer.render(scene, camera);
-  // Anima as partículas para que algumas delas se conectem
-    const positions = particles.geometry.attributes.position.array;
-    for (let i = 0; i < positions.length; i += 3) {
-        let dx = positions[i] - mouse.x * 100;
-        let dy = positions[i + 1] - mouse.y * 100;
-        let dz = positions[i + 2];
-        let distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (distance < particleDistance) {
-            // Simulação de conexão das partículas dentro de um raio de "particleDistance"
-            // Aqui você pode desenhar linhas entre partículas se desejar, ou alterar a cor
-        }
-    }
-
-
-  controls.update();
-  planet.rotation.y += 0.01;
-  renderer.render(scene,camera);
-  
- 
+    // Renderiza a cena
+    renderer.render(scene, camera);
+    planet.rotation.y += 0.005;
 };
 
 camera.position.z = 500;
 createParticles();
 animate();
 
-// API
-
-
+// API Event
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('test').addEventListener(("click"), () => {
+    document.getElementById('test').addEventListener("click", () => {
         getDados();
-    })
+    });
 });
 
-function teste(){
+function teste() {
     getDados();
-
 }
