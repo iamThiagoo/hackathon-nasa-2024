@@ -20,7 +20,7 @@ export function animateMoon() {
     moonAngle += 0.01; // Velocidade de rotação (ajustável)
 
     // Posição da Terra (substitua por sua posição da Terra, se necessário)
-    const earthPosition = new THREE.Vector3(0, 0, -15);
+    const earthPosition = new THREE.Vector3(0, 0, 0);
 
     // Calcula a nova posição da Lua usando seno e cosseno
     moon.position.x = earthPosition.x + moonOrbitRadius * Math.cos(moonAngle);
