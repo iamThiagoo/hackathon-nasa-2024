@@ -1,16 +1,14 @@
 import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { planet } from './src/earth';
-import { animateMoon, moon } from './src/moon';
 import { getDados } from './src/api/api';
+import { NEObject } from './src/objects.js';
 
 const w = window.innerWidth;
 const h = window.innerHeight;
 
 // Scene
 export const scene = new Scene();
-
 
 // Renderer
 const renderer = new WebGLRenderer({ antialias: true });
@@ -30,7 +28,6 @@ const controls = new OrbitControls(camera, renderer.domElement);
 let particles;
 export const mouse = new THREE.Vector2();
 const particleCount = 30000;
-const particleDistance = 10;
 
 // Carregar a textura da estrela
 const textureLoader = new THREE.TextureLoader();
@@ -70,9 +67,20 @@ controls.maxDistance = 60;
 
 renderer.render(scene, camera);
 
-// Add to scene
-scene.add(planet);
-scene.add(moon);
+
+export const earthObject = new NEObject(0, 'Earth', 12756, 'adsad asd ad', 0, 1666, 'terra.jpg', 0, 0);
+const moonObject = new NEObject(1, "Moon", 3474, " asdadas asdsad", 0, 3670, 'moon.jpeg', 15, 0)
+
+let objects = [earthObject, moonObject];
+
+for (let object of objects) {
+  const sceneObject = object.sceneObject;
+  scene.add(sceneObject);
+
+  const orbit = object.orbit;
+  console.log(orbit);
+  scene.add(orbit);
+}
 
 // Resize (zoom in/out) event
 window.addEventListener("resize", () => {
@@ -86,7 +94,10 @@ window.addEventListener("resize", () => {
 // Animation
 const animate = () => {
   requestAnimationFrame(animate);
-  animateMoon();
+
+  for (let object of objects) {
+    object.animate();
+  }
 
   // Atualiza os controles de órbita
   controls.update();
@@ -94,11 +105,9 @@ const animate = () => {
   // Renderiza a cena
   renderer.render(scene, camera);
   controls.update();
-  planet.rotation.y += 0.005;
+  // planet.rotation.y += 0.005;
 
   renderer.render(scene,camera);
-
-
 };
 
 camera.position.z = 500;
