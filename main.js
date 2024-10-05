@@ -3,6 +3,8 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
 import { animateMoon, moon } from './src/moon';
+import { getDados } from './src/api/api';
+
 const w = window.innerWidth;
 const h = window.innerHeight;
 
@@ -27,12 +29,12 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // Variáveis para o mouse e as partículas
 let particles;
 export const mouse = new THREE.Vector2();
-const particleCount = 2000;
+const particleCount = 30000;
 const particleDistance = 10;
 
 // Carregar a textura da estrela
 const textureLoader = new THREE.TextureLoader();
-const starTexture = textureLoader.load('star.svg');
+const starTexture = textureLoader.load('circle.svg');
 
 // Função para criar o sistema de partículas
 function createParticles() {
@@ -54,7 +56,7 @@ function createParticles() {
     const material = new THREE.PointsMaterial({
         map: starTexture,  // Definindo a textura da estrela
         color: 0xffffff,
-        size: 2,
+        size: 0.5,
         transparent: true,
         depthTest: false
     });
@@ -95,8 +97,24 @@ const animate = () => {
   planet.rotation.y += 0.005;
 
   renderer.render(scene,camera);
+
+
 };
 
 camera.position.z = 500;
 createParticles();
 animate();
+
+// API
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('test').addEventListener(("click"), () => {
+        getDados();
+    })
+});
+
+function teste(){
+    getDados();
+
+}
