@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
+import { velocity, friction, defaultRotationXVelocity } from './src/events-physics.js';
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -42,8 +43,21 @@ window.addEventListener("resize", () => {
 // Animation
 const animate = () => {
   requestAnimationFrame(animate);
+
+  // Aplica inércia (desaceleração suave)
+  if (velocity.x > defaultRotationXVelocity) {
+    velocity.x *= friction;
+  }
+  velocity.y *= friction;
+
+  // Atualiza a rotação do planeta com base na velocidade do mouse
+  planet.rotation.y += velocity.x;
+  planet.rotation.x += velocity.y;
+
+  // Atualiza os controles de órbita
   controls.update();
-  planet.rotation.y += 1000;
+
+  // Renderiza a cena
   renderer.render(scene, camera);
 };
 
