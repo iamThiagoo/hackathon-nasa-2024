@@ -93,23 +93,8 @@ const animate = () => {
 
   // Renderiza a cena
   renderer.render(scene, camera);
-  // Anima as partículas para que algumas delas se conectem
-    const positions = particles.geometry.attributes.position.array;
-    for (let i = 0; i < positions.length; i += 3) {
-        let dx = positions[i] - mouse.x * 100;
-        let dy = positions[i + 1] - mouse.y * 100;
-        let dz = positions[i + 2];
-        let distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (distance < particleDistance) {
-            // Simulação de conexão das partículas dentro de um raio de "particleDistance"
-            // Aqui você pode desenhar linhas entre partículas se desejar, ou alterar a cor
-        }
-    }
-
-
   controls.update();
-  planet.rotation.y += 0.01;
+  planet.rotation.y += 0.005;
 
   renderer.render(scene,camera);
 
