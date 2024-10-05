@@ -2,12 +2,13 @@ import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
-
+import { moon } from './src/moon';
 const w = window.innerWidth;
 const h = window.innerHeight;
 
 // Scene
 const scene = new Scene();
+
 
 // Renderer
 const renderer = new WebGLRenderer({ antialias: true });
@@ -70,6 +71,7 @@ renderer.render(scene, camera);
 
 // Add to scene
 scene.add(planet);
+scene.add(moon);
 
 // Resize (zoom in/out) event
 window.addEventListener("resize", () => {
@@ -101,7 +103,9 @@ const animate = () => {
 
   controls.update();
   planet.rotation.y += 0.01;
-  renderer.render(scene, camera);
+  renderer.render(scene,camera);
+  
+ 
 };
 
 camera.position.z = 500;
