@@ -2,13 +2,12 @@ import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
-import { velocity, friction, defaultRotationXVelocity } from './src/events-physics.js';
 import { moon } from './src/moon';
 const w = window.innerWidth;
 const h = window.innerHeight;
 
 // Scene
-const scene = new Scene();
+export const scene = new Scene();
 
 
 // Renderer
@@ -18,17 +17,16 @@ renderer.setSize(w, h);
 document.body.appendChild(renderer.domElement);
 
 // Camera
-const camera = new PerspectiveCamera(75, w / h, 0.1, 100);
+export const camera = new PerspectiveCamera(75, w / h, 0.1, 100);
 camera.position.z = 20;
 camera.position.set(30 * Math.cos(Math.PI / 6), 30 * Math.sin(Math.PI / 6), 40);
 
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 
-
 // Variáveis para o mouse e as partículas
 let particles;
-const mouse = new THREE.Vector2();
+export const mouse = new THREE.Vector2();
 const particleCount = 2000;
 const particleDistance = 10;
 
@@ -86,15 +84,6 @@ window.addEventListener("resize", () => {
 // Animation
 const animate = () => {
   requestAnimationFrame(animate);
-
-  // Aplica inércia (desaceleração suave)
-  
-    velocity.x *= friction;
-  velocity.y *= friction;
-
-  // Atualiza a rotação do planeta com base na velocidade do mouse
-  scene.rotation.x += velocity.x;
-  scene.rotation.y += velocity.y;
 
   // Atualiza os controles de órbita
   controls.update();
