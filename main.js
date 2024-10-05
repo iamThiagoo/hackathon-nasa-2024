@@ -3,7 +3,8 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
 import { animateMoon, moon } from './src/moon';
-import { getDados } from './src/api/api';
+import asteroid from './src/asteroid';
+
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -73,6 +74,11 @@ renderer.render(scene, camera);
 // Add to scene
 scene.add(planet);
 scene.add(moon);
+scene.add(asteroid);
+
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5, 5, 5).normalize();
+scene.add(light);
 
 // Resize (zoom in/out) event
 window.addEventListener("resize", () => {
@@ -110,10 +116,9 @@ const animate = () => {
 
   controls.update();
   planet.rotation.y += 0.01;
-
   renderer.render(scene,camera);
-
-
+  
+ 
 };
 
 camera.position.z = 500;
