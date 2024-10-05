@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { planet } from './src/earth';
-import { moon } from './src/moon';
+import { animateMoon, moon } from './src/moon';
 const w = window.innerWidth;
 const h = window.innerHeight;
 
@@ -84,6 +84,7 @@ window.addEventListener("resize", () => {
 // Animation
 const animate = () => {
   requestAnimationFrame(animate);
+  animateMoon();
 
   // Atualiza os controles de órbita
   controls.update();
@@ -107,6 +108,7 @@ const animate = () => {
 
   controls.update();
   planet.rotation.y += 0.01;
+
   renderer.render(scene,camera);
 };
 
