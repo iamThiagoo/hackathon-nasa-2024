@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getDados } from './src/api/api';
-import { NEObject } from './src/objects.js';
+import {NEObject, sunSimulatedDiameter} from './src/objects.js';
 import { target } from './src/modal.js';
 
 const w = window.innerWidth;
@@ -27,7 +27,7 @@ const defaultCameraPosition = camera.position.clone();
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.minDistance = 10;
-controls.maxDistance = 60;
+controls.maxDistance = 200;
 
 // Variáveis para o mouse e as partículas
 let particles;
@@ -40,15 +40,15 @@ createParticles();
 export const sizeScaleFactor = 20;
 
 // Objetos
-const mercuriObject = new NEObject(2, "Mercúrio", 4880, 0, 47.87 * 1000, 6, 'mercury.jpg', 7.0); // 7.0° de inclinação
-const venusObject = new NEObject(3, "Vênus", 12104, 0, 35.02 * 1000, 7, 'venus.jpg', 3.39); // 3.39° de inclinação
-export const earthObject = new NEObject(4, 'Earth', 12756, 0, 29.78 * 1000, 8, 'earth.jpg', 0.0); // 0.0° de inclinação
-const moonObject = new NEObject(5, "Moon", 3474, 0, 1.022 * 1000, 8.5, 'moon.jpg', 0.0); // 6.68° de inclinação em relação à Terra
-const marteObject = new NEObject(6, "Marte", 6779, 0, 24.077 * 1000, 10, 'mars.jpg', 25.19); // 25.19° de inclinação
-const jupiterObject = new NEObject(7, "Júpiter", 139820, 0, 13.07 * 1000, 16, 'jupiter.jpg', 3.13); // 3.13° de inclinação
-const saturnoObject = new NEObject(8, "Saturno", 116460, 0, 9.69 * 1000, 25, 'saturn.jpg', 26.73); // 26.73° de inclinação
-const uranoObject = new NEObject(9, "Urano", 50724, 0, 6.81 * 1000, 32, 'uranus.jpg', 0.77); // 0.77° de inclinação
-const netunoObject = new NEObject(10, "Netuno", 49244, 0, 5.43 * 1000, 35, 'neptune.jpg', 1.76); // 1.76° de inclinação
+const mercuriObject = new NEObject(2, "Mercúrio", 4880, 0, 47.87 * 1000, 15, 'mercury.jpg', 7.0); // 7.0° de inclinação
+const venusObject = new NEObject(3, "Vênus", 12104, 0, 35.02 * 1000, 20, 'venus.jpg', 3.39); // 3.39° de inclinação
+export const earthObject = new NEObject(4, 'Earth', 12756, 0, 29.78 * 1000, 25, 'earth.jpg', 0.0); // 0.0° de inclinação
+const moonObject = new NEObject(5, "Moon", 3474, 0, 1.022 * 1000, 27, 'moon.jpg', 0.0); // 6.68° de inclinação em relação à Terra
+const marteObject = new NEObject(6, "Marte", 6779, 0, 24.077 * 1000, 40, 'mars.jpg', 25.19); // 25.19° de inclinação
+const jupiterObject = new NEObject(7, "Júpiter", 139820, 0, 13.07 * 1000, 60, 'jupiter.jpg', 3.13); // 3.13° de inclinação
+const saturnoObject = new NEObject(8, "Saturno", 116460, 0, 9.69 * 1000, 90, 'saturn.jpg', 26.73); // 26.73° de inclinação
+const uranoObject = new NEObject(9, "Urano", 50724, 0, 6.81 * 1000, 130, 'uranus.jpg', 0.77); // 0.77° de inclinação
+const netunoObject = new NEObject(10, "Netuno", 49244, 0, 5.43 * 1000, 160, 'neptune.jpg', 1.76); // 1.76° de inclinação
 
 let objects = [
   earthObject, 
@@ -65,10 +65,10 @@ let objects = [
 const asteroids = await getDados();
 
 const dados = asteroids.data.near_earth_objects;
-dados['2024-10-05'] = dados['2024-10-05'].slice(0,5);
+dados['2024-10-05'] = dados['2024-10-05'].slice(0, 10);
 
 let j = 30
-for(let i=0; i<dados['2024-10-05'].length; i++){
+for(let i=0; i< dados['2024-10-05'].length; i++){
   let dado = dados['2024-10-05'][i];
   const diameter = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
   const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
@@ -76,20 +76,20 @@ for(let i=0; i<dados['2024-10-05'].length; i++){
 
   console.log(distance)
 
-  const asteroideObject = new NEObject(dado.id, dado.name, 17370, 0, velocity, j, 'moon.jpg', 0);
+  const asteroideObject = new NEObject(dado.id, dado.name, 17370, 0, velocity, Math.floor(Math.random() * (160 - 50) + 50), 'moon.jpg', Math.floor(Math.random() * (90 - (-90)) + (-90)), true);
 
   objects.push(asteroideObject);
   j+=5;
 }
 
-earthObject.sceneObject.receiveShadow;
-
 for (let object of objects) {
   const sceneObject = object.sceneObject;
   scene.add(sceneObject);
-  
-  const orbit = object.orbit;
-  scene.add(orbit);
+
+  if (!object.isAsteroid) {
+    const orbit = object.orbit;
+    scene.add(orbit);
+  }
 }
 
 setTimeout(() => {
@@ -162,9 +162,8 @@ document.addEventListener("DOMContentLoaded", async function() {
 let sun;
 
 function createSun() {
-  const objectScale = 1275.6;
-  const diameter = 15000;
-  const geometry = new THREE.SphereGeometry((diameter / objectScale) / 2, 32, 32);
+
+  const geometry = new THREE.SphereGeometry(sunSimulatedDiameter, 32, 32);
   const material = new THREE.MeshBasicMaterial({ map: textureLoader.load('sun.jpg') });
   
   // Inicializar a variável 'sun' aqui
@@ -241,7 +240,7 @@ function animate() {
 
   controls.update();
   renderer.render(scene, camera);
-};
+}
 
 export function resetCameraPosition() {
   // target = null;

@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 
-export const objectScale = 1275.6 * 20;
-export const orbitationVelocityScale = 2160000;
+export const orbitationVelocityScale = 21600000;
 export const radiusFromCenter = 5;
+export const sunDiameter = 1392684;
+export const sunSimulatedDiameter = 15;
+export const sizeScale = (sunDiameter / sunSimulatedDiameter)
+export const planetScale = sizeScale / 10;
 
 function getRandomColor() {
     const colors = [
@@ -38,7 +41,7 @@ export class NEObject {
     /**
      * Represents a Near Earth Object.
      * @constructor
-     * @param {string} id - The id of the object.
+     * @param {number} id - The id of the object.
      * @param {string} name - The name of the object.
      * @param {number} diameter - The object diameter in kilometers.
      * @param {number} rotationVelocity - The rotation velocity of the object.
@@ -60,12 +63,16 @@ export class NEObject {
         this._sceneObject = new THREE.Mesh(this._sceneObjectGeometry, this._sceneObjectMaterial);
         this._sceneObject.name = name;
         this.inclination = inclination;
+
+        this.actualInclination = inclination;
+        this.isAscending = false;
         
         if (isAsteroid) {
             this._sceneObject.castShadow = true;
             this._sceneObject.receiveShadow = true
         }
-        
+
+        this._sceneObject.isAsteroid = isAsteroid;
 
         this.setOrbit();
     }
@@ -94,56 +101,55 @@ export class NEObject {
         return new THREE.MeshBasicMaterial({ map: texture });
     }
 
-    get scaledRadius() { return (this.diameter / objectScale) / 2; }
+    get scaledRadius() { return (this.diameter / 2) / planetScale; }
 
-    get sceneObject() { return this._sceneObject; } 
+    get sceneObject() { return this._sceneObject; }
 
-    setOrbit() {      
-        const orbitCurve = new THREE.EllipseCurve(
+    setOrbit() {
+        this.orbitCurve = new THREE.EllipseCurve(
             0, 0,  // Ponto central (x, y)
             this.earthDistance + 5, this.earthDistance + 5,  // Raio (xRadius, yRadius)
             0, 2 * Math.PI,  // Ângulo inicial e final
             true,  // Sentido horário ou anti-horário
             0  // Rotação
-          );
+        );
 
         // Gera os pontos ao longo da curva
-        const points = orbitCurve.getPoints(100);  // 100 pontos para suavizar
+        const points = this.orbitCurve.getPoints(100);  // 100 pontos para suavizar
 
         // Converte os pontos em uma geometria de linha
         const orbitGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
         // Cria o material da linha
-        let orbitMaterial;
-
-        orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+        const orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
         orbitMaterial.isOrbit = true;
 
         // Cria a linha (órbita)
         this.orbit = new THREE.Line(orbitGeometry, orbitMaterial);
 
-        // Posiciona a órbita no plano XY
-        this.orbit.rotation.x = Math.PI / 2;
-        this.orbit.rotation.y = THREE.MathUtils.degToRad(this.inclination);
+        // NÃO aplique rotação no plano XY
+        // this.orbit.rotation.x = Math.PI / 2; // <---- REMOVER ESSA LINHA
+        this.orbit.rotation.y = THREE.MathUtils.degToRad(this.inclination);  // Mantém a inclinação
     }
 
     animate() {
-        // Rotação
-        // this.sceneObject.rotation.y += this.orbitationVelocity/orbitationVelocityScale;
+        // Rotação do próprio objeto (auto-rotação)
+        this.sceneObject.rotation.y += 0.01;
 
-        // Atualiza o ângulo da Lua para criar a animação circular
-        this.angle += 0.001; // Velocidade de rotação (ajustável)
+        // Atualiza o ângulo de rotação ao longo da órbita
+        this.angle += this.orbitationVelocity / orbitationVelocityScale; // Escala de velocidade orbital
 
-        // Calcula as novas coordenadas do planeta
-        const x = (radiusFromCenter + this.earthDistance) * Math.cos(this.angle);
-        const z = (radiusFromCenter + this.earthDistance) * Math.sin(this.angle);
-        const y = (radiusFromCenter + this.earthDistance) * Math.sin(THREE.MathUtils.degToRad(this.inclination));
+        // Normaliza o ângulo para ficar entre 0 e 1 (pois o getPoint utiliza valores entre 0 e 1)
+        const normalizedAngle = (this.angle / (2 * Math.PI)) % 1;
 
-        console.log(x, z, y);
-      
-        // Atualiza a posição do planeta
+        // Usa o `getPoint` da órbita (EllipseCurve) para obter a posição ao longo da curva
+        const point = this.orbitCurve.getPoint(normalizedAngle);
 
-        // Calcula a nova posição da Lua usando seno e cosseno
-        this.sceneObject.position.set(x, y, z);
+        // Aplica a inclinação manualmente
+        const inclinedY = point.y * Math.cos(THREE.MathUtils.degToRad(this.inclination));
+        const inclinedZ = point.y * Math.sin(THREE.MathUtils.degToRad(this.inclination));
+
+        // Atualiza a posição do objeto no espaço com inclinação aplicada
+        this.sceneObject.position.set(point.x, inclinedY, inclinedZ);
     }
 }
