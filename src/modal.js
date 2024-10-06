@@ -5,11 +5,13 @@ import { mouse, camera, scene } from '../main.js';
 const fixed_data = {'Earth':{mass: 'Aproximadamente 5,97 × 10²⁴ kg.',
                              density:'5,52 g/cm³ (o planeta mais denso do Sistema Solar).',
                              gravity:'9,8 m/s² (ou 1 g).',
-                             translation_period:'Aproximadamente 365,25 dias (tempo que leva para orbitar o Sol).'},
+                             translation_period:'Aproximadamente 365,25 dias (tempo que leva para orbitar o Sol).',
+                             name: 'Terra'},
                       'Moon':{mass: ' Aproximadamente 7,35 × 10²² kg (cerca de 1/81 da massa da Terra).',
                               density:'3,34 g/cm³ (cerca de 60% da densidade da Terra).',
                               gravity:'Aproximadamente 1,62 m/s² (cerca de 1/6 da gravidade da Terra).',
-                              translation_period:' 27,3 dias terrestres (conhecido como mês sideral).'}
+                              translation_period:' 27,3 dias terrestres (conhecido como mês sideral).',
+                              name: 'Lua'}
                       }
 
 $('#close-modal-button').on('click', closeModal); 
@@ -44,6 +46,7 @@ function onObjectClicked(event) {
     $('#densidade')[0].innerText = information.density;
     $('#gravidade')[0].innerText = information.gravity;
     $('#periodoTransalacao')[0].innerText = information.translation_period;
+    $('#title')[0].innerText = information.name;
     openModal();
   }
 }

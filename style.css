@@ -61,3 +61,6 @@
   .div-informacoes>div>h5{
     margin-top: 0.5rem;
   }
+  .div-informacoes>h1{
+    text-align: center;
+  }
