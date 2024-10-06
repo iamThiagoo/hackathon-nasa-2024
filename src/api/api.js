@@ -28,7 +28,7 @@ export async function getDados() {
       }
       
       // Manipula o sucesso da requisição
-      return dados_api_asteroide;
+      return response;
     } catch (error) {
       // Manipula erros da requisição
       console.error('Erro ao buscar dados:', error.response ? error.response.data : error.message);

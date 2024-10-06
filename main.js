@@ -62,6 +62,30 @@ let objects = [
   netunoObject,
 ];
 
+const asteroids = await getDados();
+
+const dados = asteroids.data.near_earth_objects;
+dados['2024-10-05'] = dados['2024-10-05'].slice(0,5);
+
+
+let j = 30
+for(let i=0; i<dados['2024-10-05'].length; i++){
+  let dado = dados['2024-10-05'][i];
+  const diameter = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
+  const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
+  const distance = dado.close_approach_data[0].miss_distance.kilometers;
+
+  console.log(distance)
+
+  const asteroideObject = new NEObject(dado.id, dado.name, 3474, " asdadas asdsad", 0, velocity, j, 'moon.jpg', true);
+
+  // const netunoObject2 = new NEObject(10, "Netuno 2", 49244 / sizeScaleFactor, " asdadas asdsad", 0, 5.43 * 1000, 38, 'neptune.jpg', 1.76); // 1.76° de inclinação
+
+
+  objects.push(asteroideObject);
+  j+=5;
+}
+
 earthObject.sceneObject.receiveShadow;
 
 for (let object of objects) {
@@ -71,6 +95,10 @@ for (let object of objects) {
   const orbit = object.orbit;
   scene.add(orbit);
 }
+
+setTimeout(() => {
+  document.getElementById('loader').style.display = 'none';
+}, 4000);
 
 // Resize (zoom in/out) event
 window.addEventListener("resize", () => {
@@ -154,17 +182,6 @@ function createSun() {
 
 // Criar o sol
 createSun();
-getAsteroids();
-
-async function getAsteroids() {
-  const asteroids = await getDados();
-  asteroids.forEach(async(asteroid) => {
-      const sceneObject = asteroid.sceneObject;
-      scene.add(sceneObject);
-      scene.add(asteroid.orbit);
-  });
-}
-
 
 // Função para criar o sistema de partículas
 function createParticles() {
