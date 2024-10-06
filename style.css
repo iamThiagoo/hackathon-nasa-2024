@@ -53,3 +53,43 @@
   #close-modal-button:hover {
     cursor: pointer;
   }
+
+  .div-informacoes>div{
+    margin-bottom: 1rem;
+  }
+
+  .div-informacoes>div>h5{
+    margin-top: 0.5rem;
+  }
+  .div-informacoes>h1{
+    text-align: center;
+  }
+
+
+#loader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loader::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ccc;
+  border-top-color: black;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
