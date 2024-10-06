@@ -3,7 +3,6 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getDados } from './src/api/api';
 import { NEObject } from './src/objects.js';
-import { animateAsteroid, asteroid } from './src/asteroid.js';
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -63,15 +62,19 @@ function createParticles() {
     particles = new THREE.Points(geometry, material);
     scene.add(particles);
 }
+
 controls.minDistance = 10;
 controls.maxDistance = 60;
 
 renderer.render(scene, camera);
 
-export const earthObject = new NEObject(0, 'Earth', 12756, 'adsad asd ad', 0, 1666, 'earth.jpg', 0);
-const moonObject = new NEObject(1, "Moon", 3474, " asdadas asdsad", 0, 3670, 'moon.jpeg', 15)
+export const earthObject = new NEObject(0, 'Earth', 12756, 'adsad asd ad', 0, 1666, 0, 'earth.jpg');
+const moonObject = new NEObject(1, "Moon", 3474, " asdadas asdsad", 0, 3670, 15, 'moon.jpeg');
+const asteroid = new NEObject(2, "Asteroid", 3474/2, "Teste", 0, 3670*2, 25, '', true)
 
-let objects = [earthObject, moonObject];
+let objects = [earthObject, moonObject, asteroid];
+
+earthObject.sceneObject.receiveShadow;
 
 for (let object of objects) {
   const sceneObject = object.sceneObject;
@@ -81,8 +84,6 @@ for (let object of objects) {
   console.log(orbit);
   scene.add(orbit);
 }
-
-scene.add(asteroid);
 
 // Resize (zoom in/out) event
 window.addEventListener("resize", () => {
@@ -100,8 +101,6 @@ const animate = () => {
   for (let object of objects) {
     object.animate();
   }
-
-  animateAsteroid();
 
   // Atualiza os controles de órbita
   controls.update();

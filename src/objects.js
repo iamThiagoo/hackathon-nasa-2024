@@ -4,6 +4,36 @@ export const objectScale = 1275.6;
 export const orbitationVelocityScale = 2160000;
 export const radiusFromCenter = 5;
 
+function getRandomColor() {
+    const colors = [
+        0xCCCCCC, // Cor cinza claro
+        0x8B4513, // Cor marrom
+        0x8B0000, // Cor vermelho escuro
+        0x8B008B, // Cor roxo escuro
+        0x8B3E2F, // Cor marrom avermelhado
+        0x8B5A2B, // Cor marrom oliva
+        0x8B7D6B, // Cor cinza escuro
+        0x8B008B, // Cor roxo escuro (duplicada, pode ser removida)
+    ];
+
+    // Retorna uma cor aleatória da lista'
+    return new THREE.Color(colors[Math.floor(Math.random() * colors.length)]);
+}
+
+function distortGeometry(geometry) {
+    const position = geometry.attributes.position;
+    const vertex = new THREE.Vector3();
+
+    for (let i = 0; i < position.count; i++) {
+        vertex.fromBufferAttribute(position, i);
+        const noise = Math.random() * 0.05; // Aumenta a intensidade do ruído
+        vertex.addScaledVector(vertex.normalize(), noise);
+
+        position.setXYZ(i, vertex.x, vertex.y, vertex.z);
+    }
+    geometry.computeVertexNormals();
+}
+
 export class NEObject {
     /**
      * Represents a Near Earth Object.
@@ -16,7 +46,7 @@ export class NEObject {
      * @param {number} orbitationVelocity - The orbitation velocity of the object.
      * @param {string} textureSource - The path to the texture of this object.
      */
-    constructor(id, name, diameter, descriptionText, rotationVelocity, orbitationVelocity, textureSource, earthDistance) {
+    constructor(id, name, diameter, descriptionText, rotationVelocity, orbitationVelocity, earthDistance, textureSource=undefined, isAsteroid=false) {
         this.id = id;
         this.name = name;
         this.diameter = diameter;
@@ -25,29 +55,52 @@ export class NEObject {
         this.orbitationVelocity = orbitationVelocity;
         this.textureSource = textureSource;
         this.earthDistance = earthDistance;
+        this.isAsteroid = isAsteroid;
 
         this.angle = 0;
+
         this._sceneObject = new THREE.Mesh(this._sceneObjectGeometry, this._sceneObjectMaterial);
+        
+        if (isAsteroid) {
+            this._sceneObject.castShadow = true;
+            this._sceneObject.receiveShadow = true
+        }
+        
+
         this.setOrbit();
     }
 
     // Corrigido: getters agora retornam as instâncias de geometry e material corretamente
     get _sceneObjectGeometry() {
-        return new THREE.SphereGeometry((this.diameter / objectScale) / 2, 32, 32);
+        if (this.isAsteroid) {
+            const geometry = new THREE.DodecahedronGeometry(this.scaledRadius, 1);
+            distortGeometry(geometry);
+            return geometry;
+        }
+
+        return new THREE.SphereGeometry(this.scaledRadius, 32, 32);
     }
 
     get _sceneObjectMaterial() {
+        if (this.isAsteroid) {
+            return new THREE.MeshBasicMaterial({
+                color: getRandomColor(),
+                roughness: 0.8,
+                metalness: 0.2
+            });
+        }
+
         const textureLoader = new THREE.TextureLoader();
         const texture = textureLoader.load(this.textureSource);
-        return new THREE.MeshBasicMaterial({ wireframe: false, map: texture, transparent: true });
+        return new THREE.MeshBasicMaterial({ map: texture });
     }
 
-    get radius() { return (this.diameter / objectScale) / 2; }
+    get scaledRadius() { return (this.diameter / objectScale) / 2; }
 
     get sceneObject() { return this._sceneObject; } 
 
     setOrbit() {
-        console.log(this.radius);
+        console.log(this.scaledRadius);
         const orbitCurve = new THREE.EllipseCurve(
             0, 0,  // Ponto central (x, y)
             this.earthDistance + 5, this.earthDistance + 5,  // Raio (xRadius, yRadius)
