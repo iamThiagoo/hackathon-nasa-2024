@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 
-export const objectScale = 1275.6;
-export const orbitationVelocityScale = 2160000;
-export const radiusFromCenter = 5;
+export const earthRealRadius = 6371; // Raio real da Terra em km
+export const earthSimulatedRadius = 5; // Raio simulado da Terra no Three.js
+export const objectScale = earthRealRadius / earthSimulatedRadius; // Escala de tamanho
+export const radiusFromCenter = 5; // Raio a partir do centro da simulação
+export const velocityScale = objectScale * 500;
+
 
 function getRandomColor() {
     const colors = [
@@ -43,19 +46,31 @@ export class NEObject {
      * @param {number} diameter - The object diameter in kilometers.
      * @param {string} descriptionText - The description showed in the info modal.
      * @param {number} rotationVelocity - The rotation velocity of the object.
-     * @param {number} orbitationVelocity - The orbitation velocity of the object.
+     * @param {number} translationVelocity - The orbitation velocity of the object.
      * @param {string} textureSource - The path to the texture of this object.
      */
-    constructor(id, name, diameter, descriptionText, rotationVelocity, orbitationVelocity, earthDistance, textureSource=undefined, isAsteroid=false) {
+    constructor(
+        id, 
+        name, 
+        diameter, 
+        descriptionText, 
+        rotationVelocity, 
+        translationVelocity, 
+        earthDistance, 
+        isAsteroid=false, 
+        textureSource=undefined, 
+        isEarth=false
+    ) {
         this.id = id;
         this.name = name;
         this.diameter = diameter;
         this.descriptionText = descriptionText;
         this.rotationVelocity = rotationVelocity;
-        this.orbitationVelocity = orbitationVelocity;
+        this.translationVelocity = translationVelocity;
         this.textureSource = textureSource;
         this.earthDistance = earthDistance;
         this.isAsteroid = isAsteroid;
+        this.isEarth = isEarth;
 
         this.angle = 0;
 
@@ -73,12 +88,12 @@ export class NEObject {
     // Corrigido: getters agora retornam as instâncias de geometry e material corretamente
     get _sceneObjectGeometry() {
         if (this.isAsteroid) {
-            const geometry = new THREE.DodecahedronGeometry(this.scaledRadius, 1);
+            const geometry = new THREE.DodecahedronGeometry(this.simulatedRadius, 1);
             distortGeometry(geometry);
             return geometry;
         }
 
-        return new THREE.SphereGeometry(this.scaledRadius, 32, 32);
+        return new THREE.SphereGeometry(this.simulatedRadius, 32, 32);
     }
 
     get _sceneObjectMaterial() {
@@ -95,15 +110,29 @@ export class NEObject {
         return new THREE.MeshBasicMaterial({ map: texture });
     }
 
-    get scaledRadius() { return (this.diameter / objectScale) / 2; }
+    // Raio Simulado (Rsim) = (diametro(km) / escala) / 2
+    get simulatedRadius() { return (this.diameter / 2) / objectScale; }
+    
+    // Orbita simulada (ORsim) = distancia da terra / escala
+    get simulatedOrbitRadius() {
+        return this.isEarth ? radiusFromCenter : radiusFromCenter + (this.earthDistance / (objectScale * 10));
+    }
+
+    // Velocidade simulada (Vsim) = Vreal / escala
+    // Velocidade de angular = Vsim / ORsim
+    get simulatedTranslationVelocity() {
+        return (this.translationVelocity / velocityScale) / this.simulatedOrbitRadius;
+    }
+
+    get simulatedRotationVelocity() { return this.rotationVelocity / velocityScale}
+
 
     get sceneObject() { return this._sceneObject; } 
 
     setOrbit() {
-        console.log(this.scaledRadius);
         const orbitCurve = new THREE.EllipseCurve(
             0, 0,  // Ponto central (x, y)
-            this.earthDistance + 5, this.earthDistance + 5,  // Raio (xRadius, yRadius)
+            this.simulatedOrbitRadius, this.simulatedOrbitRadius,  // Raio (xRadius, yRadius)
             0, 2 * Math.PI,  // Ângulo inicial e final
             true,  // Sentido horário ou anti-horário
             0  // Rotação
@@ -127,14 +156,14 @@ export class NEObject {
 
     animate() {
         // Rotação
-        this.sceneObject.rotation.y += this.orbitationVelocity/orbitationVelocityScale;
+        this.sceneObject.rotation.y += this.simulatedRotationVelocity;
 
         // Atualiza o ângulo da Lua para criar a animação circular
-        this.angle += 0.001; // Velocidade de rotação (ajustável)
-
+        this.angle += this.simulatedTranslationVelocity; // Velocidade de rotação (ajustável)
+        
         // Calcula as novas coordenadas do planeta
-        const x = (radiusFromCenter + this.earthDistance) * Math.cos(this.angle);
-        const z = (radiusFromCenter + this.earthDistance) * Math.sin(this.angle);
+        const x = (this.simulatedOrbitRadius) * Math.cos(this.angle);
+        const z = (this.simulatedOrbitRadius) * Math.sin(this.angle);
       
         // Atualiza a posição do planeta
 
