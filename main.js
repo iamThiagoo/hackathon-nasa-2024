@@ -63,18 +63,11 @@ window.addEventListener("resize", () => {
 });
 
 // API
-// document.addEventListener("DOMContentLoaded", async function() {
-//   const asteroids = await getDados();
-//   asteroids.forEach(asteroid => {
-//     const sceneObject = asteroid.sceneObject;
-//     scene.add(sceneObject);
+document.addEventListener("DOMContentLoaded", async function() {
+  const asteroids = await getDados();
 
-//     const orbit = asteroid.orbit;
-//     scene.add(orbit);
-
-//   }
-//   )
-// });
+  document.getElementById('loader').style.display = 'none';
+});
 
 // Função para criar o sistema de partículas
 function createParticles() {
