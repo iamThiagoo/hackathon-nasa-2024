@@ -118,6 +118,7 @@ export class NEObject {
 
         // Cria o material da linha
         const orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+        orbitMaterial.isOrbit = true;
 
         // Cria a linha (órbita)
         this.orbit = new THREE.Line(orbitGeometry, orbitMaterial);

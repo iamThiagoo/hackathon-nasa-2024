@@ -53,3 +53,11 @@
   #close-modal-button:hover {
     cursor: pointer;
   }
+
+  .div-informacoes>div{
+    margin-bottom: 1rem;
+  }
+
+  .div-informacoes>div>h5{
+    margin-top: 0.5rem;
+  }

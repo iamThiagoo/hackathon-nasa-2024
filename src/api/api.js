@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { NEObject } from '../objects';
 
 
 export async function getDados() {
+    let dados_api_asteroide = [];
     try {
       const response = await axios.get('https://api.nasa.gov/neo/rest/v1/feed', {
         params: {
@@ -14,7 +16,13 @@ export async function getDados() {
       const dados = response.data.near_earth_objects
 
       for(let i=0; i<response.data.element_count; i++){
-            console.log("==>", dados['2024-10-05'][i]);
+            let dado = dados['2024-10-05'][i];
+            const km = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
+            const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
+            const distance = dado.close_approach_data[0].miss_distance.astronomical;
+            const asteroideObject = new NEObject(dado.id, dado.name, km, " asdadas asdsad", velocity, 3670, 'moon.jpeg', distance, 0);
+
+            dados_api_asteroide.push(asteroideObject);
       }
       
       // Manipula o sucesso da requisição
