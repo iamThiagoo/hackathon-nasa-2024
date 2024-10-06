@@ -28,7 +28,7 @@ function onObjectClicked(event) {
   const intersects = raycaster.intersectObjects(scene.children);
 
   // 3.4 Verifica se houve interseção e reage
-  if (intersects.length > 0) {
+  if (intersects.length > 0 && !intersects[0].object.isStar) {
     openModal();
   }
 }

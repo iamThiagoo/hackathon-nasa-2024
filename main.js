@@ -61,6 +61,7 @@ function createParticles() {
 
     // Criar sistema de partículas
     particles = new THREE.Points(geometry, material);
+    particles.isStar = true;
     scene.add(particles);
 }
 
