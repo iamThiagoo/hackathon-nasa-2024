@@ -37,7 +37,7 @@ createParticles();
 
 // Objetos
 export const earthObject = new NEObject(0, 'Earth', 12756, 'adsad asd ad', 0, 1666, 0, 'earth.jpg');
-const moonObject = new NEObject(1, "Moon", 3474, " asdadas asdsad", 0, 3670, 15, 'moon.jpeg');
+const moonObject = new NEObject(1, "Moon", 3474, " asdadas asdsad", 0, 3670, 15, 'moon.jpg');
 // const asteroid = new NEObject(2, "Asteroid", 3474/2, "Teste", 0, 3670*2, 25, '', true)
 
 let objects = [earthObject, moonObject];
@@ -67,6 +67,14 @@ document.addEventListener("DOMContentLoaded", async function() {
   const asteroids = await getDados();
 
   document.getElementById('loader').style.display = 'none';
+  asteroids.forEach(asteroid => {
+      const sceneObject = asteroid.sceneObject;
+      scene.add(sceneObject);
+
+      const orbit = asteroid.orbit;
+      scene.add(orbit);
+    }
+  )
 });
 
 // Função para criar o sistema de partículas
@@ -110,6 +118,4 @@ function animate() {
 
   controls.update();
   renderer.render(scene, camera);
-  controls.update();
-  renderer.render(scene,camera);
 };

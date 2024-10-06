@@ -100,8 +100,7 @@ export class NEObject {
 
     get sceneObject() { return this._sceneObject; } 
 
-    setOrbit() {
-        console.log(this.scaledRadius);
+    setOrbit() {      
         const orbitCurve = new THREE.EllipseCurve(
             0, 0,  // Ponto central (x, y)
             this.earthDistance + 5, this.earthDistance + 5,  // Raio (xRadius, yRadius)

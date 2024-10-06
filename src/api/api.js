@@ -17,10 +17,12 @@ export async function getDados() {
 
       for(let i=0; i<response.data.element_count; i++){
             let dado = dados['2024-10-05'][i];
-            const km = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
+            const diameter = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
             const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
-            const distance = dado.close_approach_data[0].miss_distance.astronomical;
-            const asteroideObject = new NEObject(dado.id, dado.name, km, " asdadas asdsad", velocity, 3670, 'moon.jpeg', distance, 0);
+            const distance = dado.close_approach_data[0].miss_distance.kilometers;
+
+            console.log(diameter, velocity, distance);
+            const asteroideObject = new NEObject(dado.id, dado.name, 5660, " asdadas asdsad", 0, 3555, 25, 'moon.jpg',true);
 
             dados_api_asteroide.push(asteroideObject);
       }
