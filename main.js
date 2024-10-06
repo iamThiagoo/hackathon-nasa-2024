@@ -71,7 +71,7 @@ let j = 30
 for(let i=0; i< dados['2024-10-05'].length; i++){
   let dado = dados['2024-10-05'][i];
   const diameter = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
-  const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
+  const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour / 10;
   const distance = dado.close_approach_data[0].miss_distance.kilometers;
   const asteroideObject = new NEObject(dado.id, dado.name, 17370, 0, velocity, Math.floor(Math.random() * (160 - 50) + 50), 'moon.jpg', Math.floor(Math.random() * (90 - (-90)) + (-90)), true);
 
