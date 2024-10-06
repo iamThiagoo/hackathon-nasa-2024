@@ -62,11 +62,10 @@ let objects = [
   netunoObject,
 ];
 
-await getDados();
+const asteroids = await getDados();
 
 const dados = asteroids.data.near_earth_objects;
 dados['2024-10-05'] = dados['2024-10-05'].slice(0,5);
-
 
 let j = 30
 for(let i=0; i<dados['2024-10-05'].length; i++){
