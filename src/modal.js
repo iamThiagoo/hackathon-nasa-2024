@@ -1,6 +1,7 @@
 import $ from "jquery";
 import * as THREE from 'three';
 import { mouse, camera, scene, resetCameraPosition } from '../main.js';
+import { sendMessage } from "./api/openai.js";
 const fixed_data = {
   'Sun': {
     mass: 'Aproximadamente 1,989 × 10³⁰ kg (99,86% da massa total do Sistema Solar).',
@@ -124,12 +125,13 @@ const fixed_data = {
   }
 };
 
-$('#close-modal-button').on('click', closeModal); 
+let isMakingRequests = false;
+
+$('#close-modal-button').on('click', closeModal);
 
 export function closeModal () {
     $('#modal').css({'display': 'none'});
     target = null;
-    resetCameraPosition();
 }
 
 export function openModal () {
@@ -152,9 +154,10 @@ async function onObjectClicked(event) {
   const intersects = raycaster.intersectObjects(scene.children);
 
   // 3.4 Verifica se houve interseção e reage
-  if (intersects.length > 0 && !intersects[0].object.isStar && !intersects[0].object.material.isOrbit) {
+  if (intersects.length > 0 && !intersects[0].object.isStar && !intersects[0].object.material.isOrbit && !isMakingRequests) {
     
     let index = null;
+    isMakingRequests = true;
 
     intersects.forEach((intersect, item) => {
       if (intersect.object.name) {
@@ -165,36 +168,55 @@ async function onObjectClicked(event) {
 
     if (index == null) return;
 
-    console.log(intersects[index]);
 
-    let astroName = intersects[index].object.name;
-    let content = fixed_data[astroName];
+    if(intersects[0].object.isAsteroid){
+      document.getElementById('loader').style.background='#06060696';
+      document.getElementById('loader').style.display = 'flex';
+      $('.div-informacoes').html('');
+      const returnOpenAI = await sendMessage(`informações sobre o asteroide, massa densidade, gravidade, Período de translação, Luase, Atmosfera, Curiosidade ${intersects[0].object.name}. monte com base no html
+        <h1 style="margin-bottom: 20px"></h1>
+        <p style="margin: 10px 0;"><strong>Massa:</strong>  </p>
+        <p style="margin: 15px 0;"><strong>Densidade:</strong></p>
+        <p style="margin: 15px 0;"><strong>Gravidade:</strong> </p>
+        <p style="margin: 15px 0;"><strong>Período de translação:</strong> </p>
+        <p style="margin: 15px 0;"><strong>Temperatura:</strong> </p>
+        <p style="margin: 15px 0;"><strong>Luase:</strong> </p>
+        <p style="margin: 15px 0;"><strong>Atmosfera:</strong></p>
+        <p style="margin: 15px 0;"><strong>Curiosidade:</strong></p>
+        <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p> e me retorne apenas a extrutura com o html sem mais explicações`);
+      let htmlArteroid = returnOpenAI.replace('```', '').replace('html', '').replace('```', '');
 
-    let html = `
-      <h1 style="margin-bottom: 20px">${content.name}</h1>
-      <p style="margin: 10px 0;"><strong>Massa:</strong> ${content.mass} </p>
-      <p style="margin: 15px 0;"><strong>Densidade:</strong> ${content.density}</p>
-      <p style="margin: 15px 0;"><strong>Gravidade:</strong> ${content.gravity}</p>
-      <p style="margin: 15px 0;"><strong>Período de translação:</strong> ${content.density}</p>
-      <p style="margin: 15px 0;"><strong>Temperatura:</strong> ${content.temperature}</p>
-      <p style="margin: 15px 0;"><strong>Luase:</strong> ${content.moons}</p>
-      <p style="margin: 15px 0;"><strong>Atmosfera:</strong> ${content.atmosphere}</p>
-      <p style="margin: 15px 0;"><strong>Curiosidade:</strong>${content.interesting_fact}</p>
-      <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p>
-    `;
+      $('.div-informacoes').html(htmlArteroid);
+      document.getElementById('loader').style.display = 'none';
+    }else{
 
-    html += "<ul style='padding: 0;'>";
-    for (let i = 0; i < content.sources.length; i++) {
-      html += `<li style="margin: 10px 0"><a href="${content.sources[i]}" target="_blank" style="margin: 10px 0; color: #35b3ff">${ content.sources[i]}</a></li>`;
+      let astroName = intersects[index].object.name;
+      let content = fixed_data[astroName];
+
+      let html = `
+        <h1 style="margin-bottom: 20px">${content.name}</h1>
+        <p style="margin: 10px 0;"><strong>Massa:</strong> ${content.mass} </p>
+        <p style="margin: 15px 0;"><strong>Densidade:</strong> ${content.density}</p>
+        <p style="margin: 15px 0;"><strong>Gravidade:</strong> ${content.gravity}</p>
+        <p style="margin: 15px 0;"><strong>Período de translação:</strong> ${content.density}</p>
+        <p style="margin: 15px 0;"><strong>Temperatura:</strong> ${content.temperature}</p>
+        <p style="margin: 15px 0;"><strong>Luase:</strong> ${content.luase}</p>
+        <p style="margin: 15px 0;"><strong>Atmosfera:</strong> ${content.atmosphere}</p>
+        <p style="margin: 15px 0;"><strong>Curiosidade:</strong>${content.interesting_fact}</p>
+        <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p>
+      `;
+
+      html += "<ul style='padding: 0;'>";
+      for (let i = 0; i < content.sources.length; i++) {
+        html += `<li style="margin: 10px 0"><a href="${content.sources[i]}" target="_blank" style="margin: 10px 0; color: #35b3ff">${ content.sources[i]}</a></li>`;
+      }
+      html += "</ul>";
+
+      $('.div-informacoes').html(html);
     }
-    html += "</ul>";
-
-    console.log(html)
-
-    console.log($('.div-informacoes')[0])
-    $('.div-informacoes').html(html);
 
     openModal();
+    isMakingRequests = false;
   }
 
   // close

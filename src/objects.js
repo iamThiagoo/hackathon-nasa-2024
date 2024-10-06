@@ -73,7 +73,8 @@ export class NEObject {
         }
 
         this._sceneObject.isAsteroid = isAsteroid;
-
+        this._sceneObject.isAsteroid = this.isAsteroid;
+        this._sceneObject.name = this.name;
         this.setOrbit();
     }
 
