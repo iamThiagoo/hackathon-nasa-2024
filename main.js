@@ -40,15 +40,15 @@ createParticles();
 export const sizeScaleFactor = 20;
 
 // Objetos
-const mercuriObject = new NEObject(2, "Mercúrio", 4880, 0, 47.87 * 1000, 6, 'mercury.jpg', 7.0); // 7.0° de inclinação
-const venusObject = new NEObject(3, "Vênus", 12104, 0, 35.02 * 1000, 7, 'venus.jpg', 3.39); // 3.39° de inclinação
+const mercuriObject = new NEObject(2, "Mercury", 4880, 0, 47.87 * 1000, 6, 'mercury.jpg', 7.0); // 7.0° de inclinação
+const venusObject = new NEObject(3, "Venus", 12104, 0, 35.02 * 1000, 7, 'venus.jpg', 3.39); // 3.39° de inclinação
 export const earthObject = new NEObject(4, 'Earth', 12756, 0, 29.78 * 1000, 8, 'earth.jpg', 0.0); // 0.0° de inclinação
 const moonObject = new NEObject(5, "Moon", 3474, 0, 1.022 * 1000, 8.5, 'moon.jpg', 0.0); // 6.68° de inclinação em relação à Terra
-const marteObject = new NEObject(6, "Marte", 6779, 0, 24.077 * 1000, 10, 'mars.jpg', 25.19); // 25.19° de inclinação
-const jupiterObject = new NEObject(7, "Júpiter", 139820, 0, 13.07 * 1000, 16, 'jupiter.jpg', 3.13); // 3.13° de inclinação
-const saturnoObject = new NEObject(8, "Saturno", 116460, 0, 9.69 * 1000, 25, 'saturn.jpg', 26.73); // 26.73° de inclinação
-const uranoObject = new NEObject(9, "Urano", 50724, 0, 6.81 * 1000, 32, 'uranus.jpg', 0.77); // 0.77° de inclinação
-const netunoObject = new NEObject(10, "Netuno", 49244, 0, 5.43 * 1000, 35, 'neptune.jpg', 1.76); // 1.76° de inclinação
+const marteObject = new NEObject(6, "Mars", 6779, 0, 24.077 * 1000, 10, 'mars.jpg', 25.19); // 25.19° de inclinação
+const jupiterObject = new NEObject(7, "Jupiter", 139820, 0, 13.07 * 1000, 16, 'jupiter.jpg', 3.13); // 3.13° de inclinação
+const saturnoObject = new NEObject(8, "Saturn", 116460, 0, 9.69 * 1000, 25, 'saturn.jpg', 26.73); // 26.73° de inclinação
+const uranoObject = new NEObject(9, "Uranus", 50724, 0, 6.81 * 1000, 32, 'uranus.jpg', 0.77); // 0.77° de inclinação
+const netunoObject = new NEObject(10, "Neptune", 49244, 0, 5.43 * 1000, 35, 'neptune.jpg', 1.76); // 1.76° de inclinação
 
 let objects = [
   earthObject, 
@@ -73,9 +73,6 @@ for(let i=0; i<dados['2024-10-05'].length; i++){
   const diameter = (dado.estimated_diameter.kilometers.estimated_diameter_max + dado.estimated_diameter.kilometers.estimated_diameter_min)/2
   const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
   const distance = dado.close_approach_data[0].miss_distance.kilometers;
-
-  console.log(distance)
-
   const asteroideObject = new NEObject(dado.id, dado.name, 17370, 0, velocity, j, 'moon.jpg', 0);
 
   objects.push(asteroideObject);
@@ -114,6 +111,7 @@ function createTooltip(object) {
   tooltip.style.borderRadius = '5px';
   tooltip.style.pointerEvents = 'none'; // Permite que o mouse passe através dele
   tooltip.innerText = object.name; // Definir o texto do tooltip
+  tooltip.id = object.name;
 
   document.body.appendChild(tooltip);
   tooltips[object.id] = tooltip; // Armazenar a referência ao tooltip com base no ID do objeto

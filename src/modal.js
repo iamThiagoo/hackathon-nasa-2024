@@ -150,18 +150,21 @@ async function onObjectClicked(event) {
 
   // 3.4 Verifica se houve interseção e reage
   if (intersects.length > 0 && !intersects[0].object.isStar && !intersects[0].object.material.isOrbit) {
-    focusOnObject(intersects[0].object);
-
-    const information = fixed_data[intersects[0].object.name]
-
-    // if (information) {
-    //   $('#massa')[0].innerText = information.mass;
-    //   $('#densidade')[0].innerText = information.density;
-    //   $('#gravidade')[0].innerText = information.gravity;
-    //   $('#periodoTransalacao')[0].innerText = information.translation_period;
-    // }
     
-    let astroName = intersects[0].object.name;
+    let index = null;
+
+    intersects.forEach((intersect, item) => {
+      if (intersect.object.name) {
+        index = item;
+        focusOnObject(intersect.object);
+      }
+    })
+
+    if (index == null) return;
+
+    console.log(intersects[index]);
+
+    let astroName = intersects[index].object.name;
     let content = fixed_data[astroName];
 
     let html = `
