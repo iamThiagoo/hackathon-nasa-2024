@@ -41,16 +41,14 @@ export class NEObject {
      * @param {string} id - The id of the object.
      * @param {string} name - The name of the object.
      * @param {number} diameter - The object diameter in kilometers.
-     * @param {string} descriptionText - The description showed in the info modal.
      * @param {number} rotationVelocity - The rotation velocity of the object.
      * @param {number} orbitationVelocity - The orbitation velocity of the object.
      * @param {string} textureSource - The path to the texture of this object.
      */
-    constructor(id, name, diameter, descriptionText, rotationVelocity, orbitationVelocity, earthDistance, textureSource=undefined, inclination, isAsteroid=false) {
+    constructor(id, name, diameter, rotationVelocity, orbitationVelocity, earthDistance, textureSource=undefined, inclination, isAsteroid=false) {
         this.id = id;
         this.name = name;
         this.diameter = diameter;
-        this.descriptionText = descriptionText;
         this.rotationVelocity = rotationVelocity;
         this.orbitationVelocity = orbitationVelocity;
         this.textureSource = textureSource;
