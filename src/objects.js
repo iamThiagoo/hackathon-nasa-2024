@@ -116,17 +116,9 @@ export class NEObject {
         const orbitGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
         // Cria o material da linha
-        let color = getRandomColor();
         let orbitMaterial;
 
-        console.log(this.isAsteroid);
-
-        if (this.isAsteroid == true) {
-            orbitMaterial = new THREE.LineBasicMaterial({ color: 0xcccccc });
-        } else {
-            orbitMaterial = new THREE.LineBasicMaterial({ color: 0xFF0000 });
-        }
-
+        orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
         orbitMaterial.isOrbit = true;
 
         // Cria a linha (órbita)
