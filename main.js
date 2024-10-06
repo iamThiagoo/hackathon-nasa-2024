@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { getDados } from './src/api/api';
+import { getAsteroids } from './src/api/api';
 import {NEObject, sunSimulatedDiameter} from './src/objects.js';
 import { target } from './src/modal.js';
 
@@ -62,10 +62,10 @@ let objects = [
   netunoObject,
 ];
 
-const asteroids = await getDados();
+const asteroids = await getAsteroids();
 
 const dados = asteroids.data.near_earth_objects;
-dados['2024-10-05'] = dados['2024-10-05'].slice(0, 10);
+dados['2024-10-05'] = dados['2024-10-05'].slice(0, 15);
 
 let j = 30
 for(let i=0; i< dados['2024-10-05'].length; i++){

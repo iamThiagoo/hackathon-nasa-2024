@@ -2,7 +2,7 @@ import axios from 'axios';
 import { NEObject } from '../objects';
 
 
-export async function getDados() {
+export async function getAsteroids() {
     let dados_api_asteroide = [];
     try {
       const response = await axios.get('https://api.nasa.gov/neo/rest/v1/feed', {
