@@ -17,6 +17,7 @@
     background-color: rgba(255, 255, 255, 0.205);
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
 }
   .overlay {
       display: none;
@@ -31,5 +32,24 @@
 
   #texto-info{
     margin-top: 10px;
-    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #close-modal-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border: none;
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.041);
+    font-size: 20px;
+    color: white;
+  }
+
+  #close-modal-button:hover {
+    cursor: pointer;
   }

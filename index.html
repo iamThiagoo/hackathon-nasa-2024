@@ -1,31 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-    <script type="module" src="src/modal.js"></script>
 
-    <!-- Modal HTML -->
-    <div class="overlay" id="overlay"></div>
-    <div class="modal" id="modal">
-      <button id='close-modal-button'>Fechar</button>
-      <h2>Informações</h2>
-      <p id="texto-info">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-        Velit cupiditate fuga excepturi aliquam odio aspernatur, 
-        repellat amet rem commodi voluptatibus similique cumque 
-        nulla incidunt quo accusantium nobis asperiores quas voluptatem.
-      </p>
-    </div>
-    <button id="test">TESTE</button>
-    <script type="module" src="/main.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/main.js"></script>
+  <script type="module" src="src/modal.js"></script>
+
+  <!-- Modal HTML -->
+  <div class="overlay" id="overlay"></div>
+  <div class="modal" id="modal">
+    <button id='close-modal-button'>
+      <span class="material-symbols-outlined">
+        close
+        </span>
+    </button>
+    <h2>Informações</h2>
+    <p id="texto-info"></p>
+  </div>
+  <button id="test">TESTE</button>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>
-
