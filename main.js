@@ -5,8 +5,8 @@ import { getDados } from './src/api/api';
 import {NEObject, sunSimulatedDiameter} from './src/objects.js';
 import { target } from './src/modal.js';
 
-const w = window.innerWidth;
-const h = window.innerHeight;
+let w = window.innerWidth;
+let h = window.innerHeight;
 
 // Scene
 export const scene = new Scene();
@@ -96,6 +96,8 @@ setTimeout(() => {
 
 // Resize (zoom in/out) event
 window.addEventListener("resize", () => {
+  w = window.innerWidth;
+  h = window.innerHeight;
   renderer.setSize(w, h);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
