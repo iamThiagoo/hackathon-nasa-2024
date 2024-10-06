@@ -21,8 +21,8 @@ export async function getDados() {
             const velocity = dado.close_approach_data[0].relative_velocity.kilometers_per_hour;
             const distance = dado.close_approach_data[0].miss_distance.kilometers;
 
-            console.log(diameter, velocity, distance);
-            const asteroideObject = new NEObject(dado.id, dado.name, 5660, " asdadas asdsad", 0, 3555, 25, 'moon.jpg',true);
+            console.log(diameter);
+            const asteroideObject = new NEObject(dado.id, dado.name, diameter * 10000, " asdadas asdsad", 0, velocity, distance, 'moon.jpg', 0, true);
 
             dados_api_asteroide.push(asteroideObject);
       }

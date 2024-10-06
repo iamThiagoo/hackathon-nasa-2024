@@ -1,0 +1,6 @@
+Enter rotation com inclinação
+Fechar modal deve voltar para posição inicial da camera
+Incluir mais infos
+Melhorar loader
+Inserir texto no top centro com nome do time
+Possibilidade de incluir audio openai

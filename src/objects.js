@@ -46,7 +46,7 @@ export class NEObject {
      * @param {number} orbitationVelocity - The orbitation velocity of the object.
      * @param {string} textureSource - The path to the texture of this object.
      */
-    constructor(id, name, diameter, descriptionText, rotationVelocity, orbitationVelocity, earthDistance, textureSource=undefined, isAsteroid=false) {
+    constructor(id, name, diameter, descriptionText, rotationVelocity, orbitationVelocity, earthDistance, textureSource=undefined, inclination, isAsteroid=false) {
         this.id = id;
         this.name = name;
         this.diameter = diameter;
@@ -61,6 +61,7 @@ export class NEObject {
 
         this._sceneObject = new THREE.Mesh(this._sceneObjectGeometry, this._sceneObjectMaterial);
         this._sceneObject.name = name;
+        this.inclination = inclination;
         
         if (isAsteroid) {
             this._sceneObject.castShadow = true;
@@ -86,8 +87,7 @@ export class NEObject {
         if (this.isAsteroid) {
             return new THREE.MeshBasicMaterial({
                 color: getRandomColor(),
-                roughness: 0.8,
-                metalness: 0.2
+                roughness: 0.8
             });
         }
 
@@ -116,7 +116,17 @@ export class NEObject {
         const orbitGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
         // Cria o material da linha
-        const orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+        let color = getRandomColor();
+        let orbitMaterial;
+
+        console.log(this.isAsteroid);
+
+        if (this.isAsteroid == true) {
+            orbitMaterial = new THREE.LineBasicMaterial({ color: 0xcccccc });
+        } else {
+            orbitMaterial = new THREE.LineBasicMaterial({ color: 0xFF0000 });
+        }
+
         orbitMaterial.isOrbit = true;
 
         // Cria a linha (órbita)
@@ -124,11 +134,12 @@ export class NEObject {
 
         // Posiciona a órbita no plano XY
         this.orbit.rotation.x = Math.PI / 2;
+        this.orbit.rotation.y = THREE.MathUtils.degToRad(this.inclination);
     }
 
     animate() {
         // Rotação
-        this.sceneObject.rotation.y += this.orbitationVelocity/orbitationVelocityScale;
+        // this.sceneObject.rotation.y += this.orbitationVelocity/orbitationVelocityScale;
 
         // Atualiza o ângulo da Lua para criar a animação circular
         this.angle += 0.001; // Velocidade de rotação (ajustável)
@@ -136,10 +147,11 @@ export class NEObject {
         // Calcula as novas coordenadas do planeta
         const x = (radiusFromCenter + this.earthDistance) * Math.cos(this.angle);
         const z = (radiusFromCenter + this.earthDistance) * Math.sin(this.angle);
+        const y = (radiusFromCenter + this.earthDistance) * Math.sin(THREE.MathUtils.degToRad(this.inclination));
       
         // Atualiza a posição do planeta
 
         // Calcula a nova posição da Lua usando seno e cosseno
-        this.sceneObject.position.set(x, 0, z);
+        this.sceneObject.position.set(x, y, z);
     }
 }

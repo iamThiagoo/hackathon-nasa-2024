@@ -1,6 +1,7 @@
 import $ from "jquery";
 import * as THREE from 'three';
-import { mouse, camera, scene } from '../main.js';
+import { mouse, camera, scene, resetCameraPosition } from '../main.js';
+import { int } from "three/webgpu";
 
 const fixed_data = {'Earth':{mass: 'Aproximadamente 5,97 × 10²⁴ kg.',
                              density:'5,52 g/cm³ (o planeta mais denso do Sistema Solar).',
@@ -41,6 +42,8 @@ function onObjectClicked(event) {
 
   // 3.4 Verifica se houve interseção e reage
   if (intersects.length > 0 && !intersects[0].object.isStar && !intersects[0].object.material.isOrbit) {
+    focusOnObject(intersects[0].object);
+
     const information = fixed_data[intersects[0].object.name]
     $('#massa')[0].innerText = information.mass;
     $('#densidade')[0].innerText = information.density;
@@ -49,6 +52,23 @@ function onObjectClicked(event) {
     $('#title')[0].innerText = information.name;
     openModal();
   }
+
+  // close
+  // resetCameraPosition();
+}
+
+export let target = null;
+
+function focusOnObject(intersectedObject) {
+  const targetPosition = new THREE.Vector3();
+  intersectedObject.getWorldPosition(targetPosition);
+  target = intersectedObject;
+
+  // Foco na posição do objeto
+  const distance = 15; // Distância da câmera até o objeto
+  camera.position.copy(targetPosition);
+  camera.position.z += distance; // Mover a câmera para trás
+  camera.lookAt(targetPosition); // Fazer a câmera olhar para o objeto
 }
 
 // 4. Adicionando o event listener de clique do mouse
