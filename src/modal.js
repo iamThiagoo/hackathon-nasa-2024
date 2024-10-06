@@ -7,7 +7,9 @@ const fixed_data = {
     density: '1,41 g/cm³.',
     gravity: '274 m/s².',
     translation_period: 'O Sistema Solar orbita o centro da Via Láctea em cerca de 225-250 milhões de anos.',
+    moons: 'Nenhuma.',
     temperature: 'Aproximadamente 5.500 °C na superfície (fotosfera) e até 15 milhões de °C no núcleo.',
+    atmosphere: 'A atmosfera do Sol é extremamente quente e turbulenta, composta por plasma em constante movimento.',
     type: 'Estrela anã amarela (tipo espectral G2V).',
     interesting_fact: 'A luz do Sol leva aproximadamente 8 minutos e 20 segundos para chegar à Terra. Apesar de parecer estático, o Sol está perdendo cerca de 4 milhões de toneladas de massa por segundo, através da fusão nuclear.',
     sources: ['https://solarsystem.nasa.gov/sun', 'https://www.space.com/sun'],
@@ -54,6 +56,7 @@ const fixed_data = {
     density: '3,34 g/cm³ (cerca de 60% da densidade da Terra).',
     gravity: 'Aproximadamente 1,62 m/s² (cerca de 1/6 da gravidade da Terra).',
     translation_period: '27,3 dias terrestres (conhecido como mês sideral).',
+    moons: 'Nenhuma.',
     temperature: 'De -173 °C à noite a 127 °C durante o dia.',
     interesting_fact: 'A Lua sempre mostra o mesmo lado para a Terra, um fenômeno conhecido como rotação síncrona. Os astronautas da Apollo 11 foram os primeiros humanos a pisar na Lua em 1969.',
     sources: ['https://solarsystem.nasa.gov/moons/earths-moon/overview/', 'https://www.space.com/18175-how-was-the-moon-formed.html'],
@@ -174,7 +177,7 @@ async function onObjectClicked(event) {
       <p style="margin: 15px 0;"><strong>Gravidade:</strong> ${content.gravity}</p>
       <p style="margin: 15px 0;"><strong>Período de translação:</strong> ${content.density}</p>
       <p style="margin: 15px 0;"><strong>Temperatura:</strong> ${content.temperature}</p>
-      <p style="margin: 15px 0;"><strong>Luase:</strong> ${content.luase}</p>
+      <p style="margin: 15px 0;"><strong>Luase:</strong> ${content.moons}</p>
       <p style="margin: 15px 0;"><strong>Atmosfera:</strong> ${content.atmosphere}</p>
       <p style="margin: 15px 0;"><strong>Curiosidade:</strong>${content.interesting_fact}</p>
       <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p>
