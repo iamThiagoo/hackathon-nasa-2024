@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { planet } from './src/earth';
-import { animateMoon, moon } from './src/moon';
-import { asteroid, animateAsteroid } from './src/asteroid';
+import { getDados } from './src/api/api';
+import { NEObject } from './src/objects.js';
+import { animateAsteroid, asteroid } from './src/asteroid.js';
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -29,7 +29,6 @@ const controls = new OrbitControls(camera, renderer.domElement);
 let particles;
 export const mouse = new THREE.Vector2();
 const particleCount = 30000;
-const particleDistance = 10;
 
 // Carregar a textura da estrela
 const textureLoader = new THREE.TextureLoader();
@@ -64,54 +63,71 @@ function createParticles() {
     particles = new THREE.Points(geometry, material);
     scene.add(particles);
 }
-
 controls.minDistance = 10;
 controls.maxDistance = 60;
 
-// Add to scene
-scene.add(planet);
-scene.add(moon);
+renderer.render(scene, camera);
+
+export const earthObject = new NEObject(0, 'Earth', 12756, 'adsad asd ad', 0, 1666, 'earth.jpg', 0);
+const moonObject = new NEObject(1, "Moon", 3474, " asdadas asdsad", 0, 3670, 'moon.jpeg', 15)
+
+let objects = [earthObject, moonObject];
+
+for (let object of objects) {
+  const sceneObject = object.sceneObject;
+  scene.add(sceneObject);
+
+  const orbit = object.orbit;
+  console.log(orbit);
+  scene.add(orbit);
+}
+
 scene.add(asteroid);
 
-// Directional light
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5).normalize();
-scene.add(light);
-
-// Resize event
+// Resize (zoom in/out) event
 window.addEventListener("resize", () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    renderer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
 });
 
 // Animation
 const animate = () => {
-    requestAnimationFrame(animate);
-    animateMoon();
-    animateAsteroid();
+  requestAnimationFrame(animate);
 
-    // Atualiza os controles de órbita
-    controls.update();
+  for (let object of objects) {
+    object.animate();
+  }
 
-    // Renderiza a cena
-    renderer.render(scene, camera);
-    planet.rotation.y += 0.005;
+  animateAsteroid();
+
+  // Atualiza os controles de órbita
+  controls.update();
+
+  // Renderiza a cena
+  renderer.render(scene, camera);
+  controls.update();
+  // planet.rotation.y += 0.005;
+
+  renderer.render(scene,camera);
 };
 
 camera.position.z = 500;
 createParticles();
 animate();
 
-// API Event
+// API
+
+
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('test').addEventListener("click", () => {
+    document.getElementById('test').addEventListener(("click"), () => {
         getDados();
-    });
+    })
 });
 
-function teste() {
+function teste(){
     getDados();
+
 }

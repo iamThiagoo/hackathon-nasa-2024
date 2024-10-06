@@ -2,10 +2,12 @@ import * as THREE from 'three';
 
 // Geometria e material do asteroide
 const geometry = new THREE.DodecahedronGeometry(0.1, 1);
+export const radiusFromCenter = 5;
 distortGeometry(geometry);
 
-const material = new THREE.MeshStandardMaterial({
-    color: getRandomColor(),
+// Utilize a função getRandomColor para definir a cor do material do asteroide
+const material = new THREE.MeshBasicMaterial({
+    color: getRandomColor(), // A cor agora é aleatória
     roughness: 0.8,
     metalness: 0.2
 });
@@ -19,32 +21,31 @@ let asteroidOrbitRadius = 20;
 let asteroidAngle = 0;
 
 export function animateAsteroid() {
-    asteroidAngle += 0.01;
-    
     // Posição da Terra (substitua por sua posição da Terra, se necessário)
-    const earthPosition = new THREE.Vector3(0, 0, 0);
+    asteroidAngle += 0.001;
+    const earthDistance = 20;
     
-    // Calcula a nova posição da Lua usando seno e cosseno
-    asteroid.position.x = earthPosition.x + asteroidOrbitRadius * Math.cos(asteroidAngle);
-    asteroid.position.z = earthPosition.z + asteroidOrbitRadius * Math.sin(asteroidAngle);
-    asteroid.rotation.y += 0.01;
+    // Calcula a nova posição do asteroide usando seno e cosseno
+    const x = (radiusFromCenter + earthDistance) * Math.cos(asteroidAngle);
+    const z = (radiusFromCenter + earthDistance) * Math.sin(asteroidAngle);
+    asteroid.position.set(x, 0, z);
 }
 
 function getRandomColor() {
     const colors = [
-        '0xCCCCC',
-        '0x8B4513',
-        '0x8B0000',
-        '0x8B008B',
-        '0x8B3E2F',
-        '0x8B5A2B',
-        '0x8B7D6B',
-        '0x8B008B',
+        0xCCCCCC, // Cor cinza claro
+        0x8B4513, // Cor marrom
+        0x8B0000, // Cor vermelho escuro
+        0x8B008B, // Cor roxo escuro
+        0x8B3E2F, // Cor marrom avermelhado
+        0x8B5A2B, // Cor marrom oliva
+        0x8B7D6B, // Cor cinza escuro
+        0x8B008B, // Cor roxo escuro (duplicada, pode ser removida)
     ];
 
-    return colors[Math.floor(Math.random() * colors.length)];
+    // Retorna uma cor aleatória da lista'
+    return new THREE.Color(colors[Math.floor(Math.random() * colors.length)]);
 }
-
 
 function distortGeometry(geometry) {
     const position = geometry.attributes.position;
