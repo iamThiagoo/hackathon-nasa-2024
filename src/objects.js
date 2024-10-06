@@ -66,7 +66,7 @@ export class NEObject {
 
         this.actualInclination = inclination;
         this.isAscending = false;
-        
+
         if (isAsteroid) {
             this._sceneObject.castShadow = true;
             this._sceneObject.receiveShadow = true
