@@ -138,6 +138,8 @@ export class NEObject {
         const x = (radiusFromCenter + this.earthDistance) * Math.cos(this.angle);
         const z = (radiusFromCenter + this.earthDistance) * Math.sin(this.angle);
         const y = (radiusFromCenter + this.earthDistance) * Math.sin(THREE.MathUtils.degToRad(this.inclination));
+
+        console.log(x, z, y);
       
         // Atualiza a posição do planeta
 
