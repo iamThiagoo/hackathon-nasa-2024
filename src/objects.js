@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export const objectScale = 1275.6;
+export const objectScale = 1275.6 * 20;
 export const orbitationVelocityScale = 2160000;
 export const radiusFromCenter = 5;
 
