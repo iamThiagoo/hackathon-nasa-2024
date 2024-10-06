@@ -145,6 +145,7 @@ function createSun() {
   
   // Inicializar a variável 'sun' aqui
   sun = new THREE.Mesh(geometry, material);
+  sun.name = "Sun"
   scene.add(sun);
   
   return sun;

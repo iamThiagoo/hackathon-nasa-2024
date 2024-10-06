@@ -11,7 +11,7 @@ const fixed_data = {
     type: 'Estrela anã amarela (tipo espectral G2V).',
     interesting_fact: 'A luz do Sol leva aproximadamente 8 minutos e 20 segundos para chegar à Terra. Apesar de parecer estático, o Sol está perdendo cerca de 4 milhões de toneladas de massa por segundo, através da fusão nuclear.',
     sources: ['https://solarsystem.nasa.gov/sun', 'https://www.space.com/sun'],
-    name: 'Sol'
+    name: '☀️ Sol'
   },
   'Mercury': {
     mass: 'Aproximadamente 3,30 × 10²³ kg.',
@@ -23,7 +23,7 @@ const fixed_data = {
     atmosphere: 'Extremamente fina, composta principalmente de oxigênio, sódio e hidrogênio.',
     interesting_fact: 'Mercúrio tem uma órbita altamente elíptica e pode se aproximar do Sol a apenas 46 milhões de km. Curiosamente, um dia em Mercúrio dura quase o dobro de seu ano.',
     sources: ['https://solarsystem.nasa.gov/planets/mercury/overview/', 'https://www.space.com/36-mercury-the-suns-closest-planetary-neighbor.html'],
-    name: 'Mercúrio'
+    name: '✨ Mercúrio'
   },
   'Venus': {
     mass: 'Aproximadamente 4,87 × 10²⁴ kg.',
@@ -35,7 +35,7 @@ const fixed_data = {
     atmosphere: 'Densa, composta principalmente de dióxido de carbono com nuvens de ácido sulfúrico.',
     interesting_fact: 'Vênus tem uma rotação retrógrada, ou seja, gira no sentido oposto à maioria dos planetas, e sua atmosfera cria um efeito estufa extremo, tornando-o mais quente que Mercúrio, mesmo sendo o segundo planeta mais próximo do Sol.',
     sources: ['https://solarsystem.nasa.gov/planets/venus/overview/', 'https://www.space.com/44-venus-second-planet-from-the-sun.html'],
-    name: 'Vênus'
+    name: '🌕 Vênus'
   },
   'Earth': {
     mass: 'Aproximadamente 5,97 × 10²⁴ kg.',
@@ -47,7 +47,7 @@ const fixed_data = {
     atmosphere: 'Composta principalmente de nitrogênio (78%) e oxigênio (21%).',
     interesting_fact: 'A Terra é o único planeta conhecido a abrigar vida. Ela tem um campo magnético que a protege da radiação solar e cósmica, e sua atmosfera tem uma camada de ozônio que filtra os raios ultravioleta prejudiciais.',
     sources: ['https://solarsystem.nasa.gov/planets/earth/overview/', 'https://www.space.com/54-earth-history-composition-and-atmosphere.html'],
-    name: 'Terra'
+    name: '🌍 Terra'
   },
   'Moon': {
     mass: 'Aproximadamente 7,35 × 10²² kg (cerca de 1/81 da massa da Terra).',
@@ -57,7 +57,7 @@ const fixed_data = {
     temperature: 'De -173 °C à noite a 127 °C durante o dia.',
     interesting_fact: 'A Lua sempre mostra o mesmo lado para a Terra, um fenômeno conhecido como rotação síncrona. Os astronautas da Apollo 11 foram os primeiros humanos a pisar na Lua em 1969.',
     sources: ['https://solarsystem.nasa.gov/moons/earths-moon/overview/', 'https://www.space.com/18175-how-was-the-moon-formed.html'],
-    name: 'Lua'
+    name: '🌙 Lua'
   },
   'Mars': {
     mass: 'Aproximadamente 6,42 × 10²³ kg.',
@@ -69,7 +69,7 @@ const fixed_data = {
     atmosphere: 'Fina, composta principalmente de dióxido de carbono (95%), com traços de nitrogênio e argônio.',
     interesting_fact: 'Marte é conhecido como o "planeta vermelho" por causa do óxido de ferro (ferrugem) em sua superfície. Ele tem a montanha mais alta do Sistema Solar, Olympus Mons, com 22 km de altura.',
     sources: ['https://solarsystem.nasa.gov/planets/mars/overview/', 'https://www.space.com/47-mars-the-red-planet-fourth-planet-from-the-sun.html'],
-    name: 'Marte'
+    name: '👽 Marte'
   },
   'Jupiter': {
     mass: 'Aproximadamente 1,90 × 10²⁷ kg.',
@@ -81,7 +81,7 @@ const fixed_data = {
     atmosphere: 'Principalmente hidrogênio e hélio.',
     interesting_fact: 'Júpiter é o maior planeta do Sistema Solar e tem uma tempestade conhecida como a Grande Mancha Vermelha, que é maior que a Terra e existe há pelo menos 400 anos.',
     sources: ['https://solarsystem.nasa.gov/planets/jupiter/overview/', 'https://www.space.com/7-jupiter-largest-planet-in-the-solar-system.html'],
-    name: 'Júpiter'
+    name: '🌕 Júpiter'
   },
   'Saturn': {
     mass: 'Aproximadamente 5,68 × 10²⁶ kg.',
@@ -93,7 +93,7 @@ const fixed_data = {
     atmosphere: 'Principalmente hidrogênio e hélio.',
     interesting_fact: 'Saturno é conhecido por seus belos anéis, compostos principalmente de gelo e partículas rochosas. Seus anéis são visíveis da Terra com telescópios amadores.',
     sources: ['https://solarsystem.nasa.gov/planets/saturn/overview/', 'https://www.space.com/48-saturn-the-solar-systems-major-ring-bearer.html'],
-    name: 'Saturno'
+    name: '🪐 Saturno'
   },
   'Uranus': {
     mass: 'Aproximadamente 8,68 × 10²⁵ kg.',
@@ -105,7 +105,7 @@ const fixed_data = {
     atmosphere: 'Principalmente hidrogênio, hélio e metano.',
     interesting_fact: 'Urano gira de lado, com seu eixo inclinado quase 98 graus. Isso significa que, durante parte de sua órbita, um dos hemisférios fica continuamente voltado para o Sol por 42 anos.',
     sources: ['https://solarsystem.nasa.gov/planets/uranus/overview/', 'https://www.space.com/18923-facts-about-uranus.html'],
-    name: 'Urano'
+    name: '🌕 Urano'
   },
   'Neptune': {
     mass: 'Aproximadamente 1,02 × 10²⁶ kg.',
@@ -117,7 +117,7 @@ const fixed_data = {
     atmosphere: 'Principalmente hidrogênio, hélio e metano.',
     interesting_fact: 'Netuno tem os ventos mais fortes do Sistema Solar, com velocidades que podem ultrapassar 2.000 km/h. Ele também foi o primeiro planeta a ser descoberto por meio de cálculos matemáticos, antes de ser observado.',
     sources: ['https://solarsystem.nasa.gov/planets/neptune/overview/', 'https://www.space.com/18930-neptune-facts-about-the-eighth-planet.html'],
-    name: 'Netuno'
+    name: '💫 Netuno'
   }
 };
 
@@ -165,23 +165,23 @@ async function onObjectClicked(event) {
     let content = fixed_data[astroName];
 
     let html = `
-      <h1>${content.name}</h1>
-      <p><strong>Massa:</strong> ${content.mass} </p>
-      <p><strong>Densidade:</strong> ${content.density}</p>
-      <p><strong>Gravidade:</strong> ${content.gravity}</p>
-      <p><strong>Período de translação:</strong> ${content.density}</p>
-      <p><strong>Temperatura:</strong> ${content.temperature}</p>
-      <p><strong>Luase:</strong> ${content.luase}</p>
-      <p><strong>Atmosfera:</strong> ${content.atmosphere}</p>
-      <p><strong>Curiosidade:</strong>${content.interesting_fact}</p>
-      <p><strong>Fontes:</strong></p>
+      <h1 style="margin-bottom: 20px">${content.name}</h1>
+      <p style="margin: 10px 0;"><strong>Massa:</strong> ${content.mass} </p>
+      <p style="margin: 15px 0;"><strong>Densidade:</strong> ${content.density}</p>
+      <p style="margin: 15px 0;"><strong>Gravidade:</strong> ${content.gravity}</p>
+      <p style="margin: 15px 0;"><strong>Período de translação:</strong> ${content.density}</p>
+      <p style="margin: 15px 0;"><strong>Temperatura:</strong> ${content.temperature}</p>
+      <p style="margin: 15px 0;"><strong>Luase:</strong> ${content.luase}</p>
+      <p style="margin: 15px 0;"><strong>Atmosfera:</strong> ${content.atmosphere}</p>
+      <p style="margin: 15px 0;"><strong>Curiosidade:</strong>${content.interesting_fact}</p>
+      <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p>
     `;
 
-    let sourcesListString = "<ul>";
+    html += "<ul style='padding: 0;'>";
     for (let i = 0; i < content.sources.length; i++) {
-        sourcesListString += `<li><a href="${content.sources[i]}" target="_blank">${ content.sources[i]}</a></li>`;
+      html += `<li style="margin: 10px 0"><a href="${content.sources[i]}" target="_blank" style="margin: 10px 0; color: #35b3ff">${ content.sources[i]}</a></li>`;
     }
-    sourcesListString += "</ul>";
+    html += "</ul>";
 
     console.log(html)
 
