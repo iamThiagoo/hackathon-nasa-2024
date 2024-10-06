@@ -77,10 +77,7 @@ for(let i=0; i<dados['2024-10-05'].length; i++){
 
   console.log(distance)
 
-  const asteroideObject = new NEObject(dado.id, dado.name, 3474, " asdadas asdsad", 0, velocity, j, 'moon.jpg', true);
-
-  // const netunoObject2 = new NEObject(10, "Netuno 2", 49244 / sizeScaleFactor, " asdadas asdsad", 0, 5.43 * 1000, 38, 'neptune.jpg', 1.76); // 1.76° de inclinação
-
+  const asteroideObject = new NEObject(dado.id, dado.name, 17370, 0, velocity, j, 'moon.jpg', 0);
 
   objects.push(asteroideObject);
   j+=5;
