@@ -3,6 +3,7 @@ import { Scene, WebGLRenderer, PerspectiveCamera } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getDados } from './src/api/api';
 import { NEObject } from './src/objects.js';
+import { sendMessage } from './src/api/openai.js';
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -120,9 +121,10 @@ animate();
 // API
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('test').addEventListener(("click"), () => {
+document.addEventListener("DOMContentLoaded", async function() {
+    document.getElementById('test').addEventListener(("click"), async () => {
         getDados();
+        console.log(await sendMessage('olá, tudo bem?'));
     })
 });
 
