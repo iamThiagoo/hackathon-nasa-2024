@@ -120,13 +120,8 @@ createParticles();
 animate();
 
 // API
-
-
 document.addEventListener("DOMContentLoaded", async function() {
-    document.getElementById('test').addEventListener(("click"), async () => {
-        getDados();
-        console.log(await sendMessage('olá, tudo bem?'));
-    })
+  getDados();
 });
 
 function teste(){

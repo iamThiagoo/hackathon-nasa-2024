@@ -60,6 +60,7 @@ export class NEObject {
         this.angle = 0;
 
         this._sceneObject = new THREE.Mesh(this._sceneObjectGeometry, this._sceneObjectMaterial);
+        this._sceneObject.name = name;
         
         if (isAsteroid) {
             this._sceneObject.castShadow = true;
