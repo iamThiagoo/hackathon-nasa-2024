@@ -156,7 +156,7 @@ async function onObjectClicked(event) {
     intersects.forEach((intersect, item) => {
       if (intersect.object.name) {
         index = item;
-        focusOnObject(intersect.object);
+        // focusOnObject(intersect.object);
       }
     })
 
@@ -209,7 +209,7 @@ function focusOnObject(intersectedObject) {
   const distance = 15; // Distância da câmera até o objeto
   camera.position.copy(targetPosition);
   camera.position.z += distance; // Mover a câmera para trás
-  camera.lookAt(targetPosition); // Fazer a câmera olhar para o objeto
+  camera.lookAt(targetPosition - distance); // Fazer a câmera olhar para o objeto
 }
 
 // 4. Adicionando o event listener de clique do mouse
