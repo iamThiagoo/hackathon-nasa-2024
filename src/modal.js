@@ -125,9 +125,17 @@ const fixed_data = {
   }
 };
 
+let passedTutorial = false;
 let isMakingRequests = false;
 
 $('#close-modal-button').on('click', closeModal);
+
+$('#hide-button').on('click', () => {
+  closeModal();
+  $('#close-modal-button').show();
+  $(event.target).hide();
+  passedTutorial = true;
+});
 
 export function closeModal () {
     $('#modal').css({'display': 'none'});
@@ -143,6 +151,12 @@ const raycaster = new THREE.Raycaster();
 
 // Função para lidar com o evento de clique
 async function onObjectClicked(event) {
+  if (!passedTutorial) {
+    $('#close-modal-button').show();
+    $('#hide-button').hide();
+    passedTutorial = true;
+  }
+
   // 3.1 Atualiza a posição do mouse para os valores de coordenadas normalizadas
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;

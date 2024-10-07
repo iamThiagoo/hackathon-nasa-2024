@@ -27,7 +27,7 @@ const defaultCameraPosition = camera.position.clone();
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.minDistance = 10;
-controls.maxDistance = 200;
+controls.maxDistance = 250;
 
 // Variáveis para o mouse e as partículas
 let particles;
@@ -37,13 +37,11 @@ const starTexture = textureLoader.load('circle.svg');
 const particleCount = 30000;
 createParticles();
 
-export const sizeScaleFactor = 20;
-
 // Objetos
 const mercuriObject = new NEObject(2, "Mercury", 4880, 0, 47.87 * 1000, 15, 'mercury.jpg', 7.0); // 7.0° de inclinação
 const venusObject = new NEObject(3, "Venus", 12104, 0, 35.02 * 1000, 20, 'venus.jpg', 3.39); // 3.39° de inclinação
 export const earthObject = new NEObject(4, 'Earth', 12756, 0, 29.78 * 1000, 25, 'earth.jpg', 0.0); // 0.0° de inclinação
-const moonObject = new NEObject(5, "Moon", 3474, 0, 1.022 * 1000, 27, 'moon.jpg', 0.0); // 6.68° de inclinação em relação à Terra
+const moonObject = new NEObject(5, "Moon", 3474, 0, 29.78 * 1000, 27, 'moon.jpg', 0.0); // 6.68° de inclinação em relação à Terra
 const marteObject = new NEObject(6, "Mars", 6779, 0, 24.077 * 1000, 40, 'mars.jpg', 25.19); // 25.19° de inclinação
 const jupiterObject = new NEObject(7, "Jupiter", 139820, 0, 13.07 * 1000, 60, 'jupiter.jpg', 3.13); // 3.13° de inclinação
 const saturnoObject = new NEObject(8, "Saturn", 116460, 0, 9.69 * 1000, 90, 'saturn.jpg', 26.73); // 26.73° de inclinação
@@ -117,7 +115,7 @@ function createTooltip(object) {
   tooltip.id = object.name;
 
   document.body.appendChild(tooltip);
-  tooltips[object.id] = tooltip; // Armazenar a referência ao tooltip com base no ID do objeto
+  tooltips[object.id] = tooltip;
 }
 
 objects.forEach((object) => {
@@ -174,7 +172,6 @@ function createSun() {
   
   return sun;
 }
-
 
 // Criar o sol
 createSun();
