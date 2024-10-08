@@ -180,7 +180,7 @@ async function onObjectClicked(event) {
         <p style="margin: 15px 0;"><strong>Gravidade:</strong> </p>
         <p style="margin: 15px 0;"><strong>Período de translação:</strong> </p>
         <p style="margin: 15px 0;"><strong>Temperatura:</strong> </p>
-        <p style="margin: 15px 0;"><strong>Luase:</strong> </p>
+        <p style="margin: 15px 0;"><strong>Luas:</strong> </p>
         <p style="margin: 15px 0;"><strong>Atmosfera:</strong></p>
         <p style="margin: 15px 0;"><strong>Curiosidade:</strong></p>
         <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p> e me retorne apenas a extrutura com o html sem mais explicações`);
@@ -200,7 +200,7 @@ async function onObjectClicked(event) {
         <p style="margin: 15px 0;"><strong>Gravidade:</strong> ${content.gravity}</p>
         <p style="margin: 15px 0;"><strong>Período de translação:</strong> ${content.density}</p>
         <p style="margin: 15px 0;"><strong>Temperatura:</strong> ${content.temperature}</p>
-        <p style="margin: 15px 0;"><strong>Luase:</strong> ${content.luase}</p>
+        <p style="margin: 15px 0;"><strong>Luas:</strong> ${content.moons}</p>
         <p style="margin: 15px 0;"><strong>Atmosfera:</strong> ${content.atmosphere}</p>
         <p style="margin: 15px 0;"><strong>Curiosidade:</strong>${content.interesting_fact}</p>
         <p style="margin: 15px 0 5px 0;"><strong>Fontes:</strong></p>
