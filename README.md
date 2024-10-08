@@ -1,18 +1,22 @@
-# 🪐 AstroNEXO: Um desafio NASA Internation Space App Challenge
+# 🪐 AstroNEXO: NASA Internation Space App Challenge
 
 O projeto desenvolvido é um modelo 3D do Sistema Solar, ajustando-se ao tema proposto ao fornecer informações sobre objetos próximos ao planeta Terra, bem como sobre todo o Sistema Solar com todos os seus detalhes. O projeto é importante porque permite que estudantes, que não têm a oportunidade de visitar planetários reais, tenham um ao seu alcance. O aplicativo pode ser utilizado por escolas e instituições com menos recursos financeiros.
 
 <div style="display: flex; gap: 15px">
-<img src="./public/screenshoot.png" width="50%"/>
-<img src="./public/screenshoot_2.png" width="50%" />
+<img src="./public/screenshoot.png" width="49%"/>
+<img src="./public/screenshoot_2.png" width="49%" />
 </div>
+
+<br>
+
+Projeto Demo: https://hackathon-nasa-2024.vercel.app/
 
 ---
 
 Tecnologias:
 - [ThreeJS](https://threejs.org/)
 
-Colaboradores
+Colaboradores:
 - [Eduardo Ballico](https://github.com/EduardoBllc)
 - [Guilherme Brito](https://github.com/Glbdias)
 - Miguel Longhi
