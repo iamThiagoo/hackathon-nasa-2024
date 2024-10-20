@@ -14,10 +14,6 @@
     "vite": "^5.4.1"
   },
   "dependencies": {
-    "axios": "^1.7.7",
-    "dotenv": "^16.4.5",
-    "jquery": "^3.7.1",
-    "openai": "^4.67.1",
     "three": "^0.168.0"
   }
 }

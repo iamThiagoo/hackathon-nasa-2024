@@ -3,70 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/svg/space.svg" />
-    <link rel="stylesheet" href="./src/assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AstroNexo - A sua solução de consulta planetária</title>
   </head>
 
   <body>
     <div id="app"></div>
+    <div id="tooltip-layer" aria-hidden="true"></div>
+    <div id="loader" aria-hidden="true"></div>
 
-    <div id="loader"></div>
-
-    <!-- Modal HTML -->
-    <div class="overlay" id="overlay"></div>
-
-    <div class="modal" id="modal">
-      <button id="close-modal-button">
-        <span class="material-symbols-outlined">close</span>
+    <aside class="modal" id="modal">
+      <button
+        id="close-modal-button"
+        type="button"
+        aria-label="Fechar informações"
+      >
+        ×
       </button>
-      <div class="div-informacoes">
-        <h1 style="margin-bottom: 10px; text-align: left; font-size: 28px">
-          Bem vindo ao AstroNEXO!
-        </h1>
-        <h3
-          style="
-            font-weight: normal;
-            margin-bottom: 30px;
-            color: #c4c4c4;
-            font-size: 16px;
-          "
-        >
+
+      <div class="div-informacoes" id="modal-content">
+        <h1 class="modal-title">Bem vindo ao AstroNEXO!</h1>
+        <h2 class="modal-subtitle">
           O seu observatório online, fácil e prático.
-        </h3>
-        <p style="margin-bottom: 30px">
+        </h2>
+        <p>
           Clique em um objeto ou pesquise no menu para visualizar suas
           informações.
         </p>
-        <div style="display: flex; justify-content: space-evenly">
+
+        <div class="controls-grid">
           <div class="controles">
             <img
-              src="public/img/left_click.png"
+              src="/img/left_click.png"
               height="102"
               width="106"
               alt="Clique esquerdo"
             />
-            <img
-              src="public/img/rotate.png"
-              height="70"
-              width="70"
-              alt="Rotação"
-            />
+            <img src="/img/rotate.png" height="70" width="70" alt="Rotação" />
           </div>
 
           <div class="controles">
             <img
-              src="public/img/right_click.png"
+              src="/img/right_click.png"
               height="102"
               width="106"
               alt="Clique direito"
             />
             <img
-              src="public/img/move.png"
+              src="/img/move.png"
               height="70"
               width="70"
               alt="Movimentação"
@@ -74,22 +58,19 @@
           </div>
         </div>
 
-        <div class="controles" style="justify-content: center">
-          <img
-            src="public/img/scroll.png"
-            height="102"
-            width="106"
-            alt="Rolagem"
-          />
-          <img src="public/img/zoom.png" height="50" width="50" alt="Zoom" />
+        <div class="controles controls-single">
+          <img src="/img/scroll.png" height="102" width="106" alt="Rolagem" />
+          <img src="/img/zoom.png" height="50" width="50" alt="Zoom" />
         </div>
       </div>
-      <div style="display: flex; justify-content: center">
-        <button class="modal-button" id="hide-button">Fechar</button>
+
+      <div class="modal-footer" id="modal-footer">
+        <button class="modal-button" id="hide-button" type="button">
+          Fechar
+        </button>
       </div>
-    </div>
+    </aside>
 
     <script type="module" src="/main.js"></script>
-    <script type="module" src="src/modal.js"></script>
   </body>
 </html>
